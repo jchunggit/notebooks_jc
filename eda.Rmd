@@ -5,7 +5,7 @@ date: "7/5/2020"
 output: html_document
 ---
 
-## covid 19 eda; bayer
+## covid 19 eda
 
 ```{r, include=FALSE}
 setwd("~/10 work/covid19")

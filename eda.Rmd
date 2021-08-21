@@ -1,0 +1,189 @@
+---
+title: "covid19_eda"
+author: "jai chung"
+date: "7/5/2020"
+output: html_document
+---
+
+## covid 19 eda; bayer
+
+```{r, include=FALSE}
+setwd("~/10 work/covid19")
+source("functions.r")
+```
+
+```{r read, join etc, echo = FALSE}
+# read, filter and join stuff
+apo_sales <- read.csv("de_pharm_covid_01_26_19_20.csv")
+if("X" %in% colnames(apo_sales)){
+  apo_sales <- apo_sales %>% select(-X)
+}
+clc <- read.csv("CLC_legend.csv", sep = ";")
+clc <- clc %>% select(CLC_CODE, LABEL3)
+scok <- read.csv("shopcd_ok_code_join.csv")
+scok <- scok %>% select(-c(fid,field_1, OBJECTID, Remark, ID)) %>% 
+  left_join(clc, by = c("Code_18" = "CLC_CODE")) %>%
+  distinct(shop_cd, .keep_all = TRUE)
+# scok <- read_xlsx("scok_pool.xlsx")
+
+apo_sales <- apo_sales %>% left_join(scok, by = "shop_cd")
+bfs <- filter(apo_sales, grepl("ahnhof",Address))
+
+week_ini <- 201901
+week_max <- max(apo_sales$wk_id)
+
+apo_sales <- apo_greater(apo_sales, 201901)
+apo_t <- wk_2_t(apo_sales)
+apo_sales <- apo_sales %>% left_join(apo_t, by = "wk_id") %>%
+  mutate(yr = as.numeric(substr(wk_id,1,4))) %>% 
+  mutate(wk = as.numeric(substr(wk_id,5,6)))
+```
+
+```{r manual inputs and data, echo = FALSE}
+covid_t <- cbind(Dates = c("2020-01-27", "2020-02-24", 
+                           "2020-03-22", "2020-04-02"),
+                 Key = c(1:4),
+                 Event = c("First case in DE", "Pandemic declared by WHO", 
+                           "DE closes borders & prohibits gathering of 2+ people", 
+                           "RKI recommends masks"))
+covid_t <- as.data.frame(covid_t)
+covid_t$Dates <- format(as.Date(covid_t$Dates), "%Y%W")
+covid_t$wk <- as.numeric(substr(covid_t$Dates,5,6))
+covid_t$PCH <- c(17, 16, 15, 18)
+```
+
+```{r apo_sales}
+summary(apo_sales)
+```
+
+```{r sum of sales per wk_id, echo=FALSE}
+# total sum of sales per wk_id
+apo_sales_sum_wk <- apo_sales %>% group_by(t) %>% 
+  summarize(amt = sum(amt)/(10^6))
+# total sum of sales per wk_id (trans_nr 31)
+apo_sales_sum_wk_31 <- apo_sales %>% filter(trans_typ_nbr == 31) %>% 
+  group_by(t) %>% summarize(amt = sum(amt)/(10^6))
+plot(apo_sales_sum_wk$t,apo_sales_sum_wk$amt, 
+     type = "h", xaxt = "n", xlab = "YYYYWW",
+     ylab = "Sales (Millions)", 
+     main = "Apo Sales in Germany; 201901-202026 (Tr.Nr 11, 21, 31, 41, 51)",
+     col = "red")
+axis(1, las = 2, cex.axis = 0.5,
+     at=apo_sales_sum_wk$t, labels = apo_t$wk_id)
+
+plot(apo_sales_sum_wk_31$t,apo_sales_sum_wk_31$amt, 
+     type = "h", xaxt = "n", xlab = "YYYYWW",
+     ylab = "Sales (Millions)", 
+     main = "Apo Sales in Germany; 201901-202026 (Tr.Nr 31)",
+     col = "red")
+axis(1, las = 2, cex.axis = 0.5,
+     at=apo_sales_sum_wk$t, labels = apo_t$wk_id)
+```
+
+```{r sum of sales per wk 2019vs2020, echo=FALSE}
+apo_sales_sum_wk_vs <- apo_sales %>%
+  filter(wk < 27) %>% group_by(t,yr,wk) %>% 
+  summarize(amt = sum(amt))
+apo_sum_26_tbl <- xtabs(amt ~ yr + wk, 
+                        data=apo_sales_sum_wk_vs)/(10^6)
+hi <- 550
+bar_ready(apo_sum_26_tbl, hi)
+barplot(apo_sum_26_tbl, 
+        main="Apo Sales in Germany; '19 vs '20",
+        xlab="WW", ylab = "Sales (Millions)", 
+        col=c("#6F6456","#CB7E94"), ylim = c(0, hi),
+        legend = rownames(apo_sum_26_tbl), beside=TRUE,
+        cex.names=0.7, las=2)
+for(i in 1:4){
+  abline(v = covid_t$wk[i]*3, col = "red")
+}
+points(covid_t$wk*3,rep(roundUp(apo_sum_26_tbl),4),
+       pch = covid_t$PCH, cex = 2, 
+       col = rep("red", 4))
+legend("bottomright", 
+       legend=covid_t$Event,
+       pch = covid_t$PCH,
+       col=rep("red", 4),
+       pt.cex = 2)
+```
+
+```{r sum of sales per wk 2019vs2020 tr31, echo=FALSE}
+# total sum of sales per wk_id 201901-201926 vs 202001-202026 Trans Nr 31
+apo_sales_sum_wk_vs_31 <- apo_sales %>% filter(trans_typ_nbr == 31) %>% 
+  filter(wk < 27) %>% group_by(t,yr,wk) %>% 
+  summarize(amt = sum(amt))
+apo_sum_26_tbl_31 <- xtabs(amt ~ yr + wk, data=apo_sales_sum_wk_vs_31)/(10^6)
+hi <- 90
+bar_ready(apo_sum_26_tbl_31,hi)
+barplot(apo_sum_26_tbl_31, 
+        main="Apo Sales in Germany (Trans 31); '19 vs '20",
+        xlab="WW", ylab = "Sales (Millions)",
+        col=c("#6F6456","#CB7E94"), ylim = c(0, hi),
+        legend = rownames(apo_sum_26_tbl), beside=TRUE,
+        cex.names=0.7, las=2)
+for(i in 1:4){
+  segments(covid_t$wk[i]*3, 0, 
+           covid_t$wk[i]*3, 
+           roundUp(apo_sum_26_tbl_31), col = "red")
+}
+points(covid_t$wk*3,rep(roundUp(apo_sum_26_tbl_31),4),
+       pch = covid_t$PCH, cex = 2, 
+       col = rep("red", 4))
+legend("bottomright", 
+       legend=covid_t$Event,
+       pch = covid_t$PCH,
+       col=rep("red", 4),
+       cex = 0.75,
+       pt.cex = 1)
+```
+
+
+```{r 10 to 26}
+apo_nat_10_26 <- apo_sales %>% filter(wk < 27, wk > 9) %>%
+  group_by(yr) %>% summarize(amt = sum(amt))
+
+apo_10_26 <- apo_nat_fi_la(apo_sales, 10, 26)
+apo_10_26 <- apo_order(apo_10_26)
+apo_10_26_f <- apo_10_26 %>% left_join(scok, by = "shop_cd") %>%
+  select(-c(XCOOR_WGS, YCOOR_WGS)) %>% 
+  mutate(bhf = case_when(grepl("ahnhof",Address)~1,
+                         TRUE ~ 0)) %>% 
+  mutate(im_bhf = case_when(grepl("m Bahnhof",Address)~1,
+                         TRUE ~ 0)) %>% 
+  filter(!is.na(pct_change))
+
+apo_14_26 <- apo_nat_fi_la(apo_sales, 14, 26)
+apo_14_26 <- apo_order(apo_14_26)
+apo_14_26_f <- apo_14_26 %>% left_join(scok, by = "shop_cd") %>%
+  select(-c(XCOOR_WGS, YCOOR_WGS)) %>% 
+  mutate(bhf = case_when(grepl("ahnhof",Address)~1,
+                         TRUE ~ 0)) %>% 
+  mutate(im_bhf = case_when(grepl("m Bahnhof",Address)~1,
+                         TRUE ~ 0)) %>%  
+  filter(!is.na(pct_change))
+
+apo_18_26 <- apo_nat_fi_la(apo_sales, 18, 26)
+apo_18_26 <- apo_order(apo_18_26)
+apo_18_26_f <- apo_18_26 %>% left_join(scok, by = "shop_cd") %>%
+  select(-c(XCOOR_WGS, YCOOR_WGS)) %>% 
+  mutate(bhf = case_when(grepl("ahnhof",Address)~1,
+                         TRUE ~ 0)) %>% 
+  mutate(im_bhf = case_when(grepl("m Bahnhof",Address)~1,
+                         TRUE ~ 0)) %>% 
+  filter(!is.na(pct_change))
+
+par(mfrow=c(3,1))
+hist(apo_10_26_f$pct_change, 
+     breaks = 150, 
+     xlim = c(-150,150),
+     main = "Week 10 ~ 26")
+hist(apo_14_26_f$pct_change, 
+     breaks = 150, 
+     xlim = c(-150,150),
+     main = "Week 14 ~ 26")
+hist(apo_18_26_f$pct_change, 
+     breaks = 150, 
+     xlim = c(-150,150),
+     main = "Week 18 ~ 26")
+
+```

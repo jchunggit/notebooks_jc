@@ -9,10 +9,10 @@ setwd("~/10 work/covid19")
 data_orig <- read_xlsx("covid_otc_raw.xlsx")
 scok <- read_xlsx("scok_pool.xlsx") %>% 
   mutate(Institution_ID = paste0("F",sprintf("%08d", one_key)))
-apotar <- read_sas("apothekentargeting_2020_06.sas7bdat")
-instpool <- read_sas("onekey_instpool_202007.sas7bdat") %>% 
+apotar <- read_sas("apothekentargeting.sas7bdat")
+instpool <- read_sas("onekey_instpool.sas7bdat") %>% 
   filter(substr(Institution_ID,1,1)=="F")
-spiegel <- read_sas("apothekenspiegel_202007.sas7bdat")
+spiegel <- read_sas("apothekenspiegel.sas7bdat")
 
 data <- scok %>% left_join(data_orig, by = "shop_cd") %>% 
   select(-shop_cd) %>% drop_na() %>% mutate(q2q1_20 = (q2_20/q1_20) - 1)

@@ -1,0 +1,75 @@
+2022-09-05 20:56:01 __main__ L76 INFO     Initiating ETL pipeline!
+2022-09-05 20:56:01 __main__ L36 INFO     Extracting file from /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv
+2022-09-05 20:56:01 src.extract L10 INFO     /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv exists. 
+2022-09-05 20:56:01 __main__ L39 INFO     Extraction CPU usage 29.7%
+2022-09-05 20:56:01 __main__ L43 INFO     Setting/transforming data types.
+2022-09-05 20:56:02 __main__ L47 INFO     Transform CPU usage 18.1%
+2022-09-05 20:56:02 __main__ L53 INFO     Validating data.
+2022-09-05 20:56:02 utils.validate L18 INFO     Validation REloan_check passed.
+2022-09-05 20:56:02 __main__ L57 INFO     Validation CPU usage 66.7%
+2022-09-05 20:56:02 __main__ L60 INFO     Loading data...
+2022-09-05 20:56:04 src.load L100 INFO     Schema paidy1 found.
+2022-09-05 20:56:06 src.load L105 INFO     Table test4_20220905 exists! Appending if there is any new data.
+2022-09-05 20:56:55 __main__ L62 INFO     Data succesfully loaded.
+2022-09-05 20:56:55 __main__ L63 INFO     Load CPU usage 9.7%
+2022-09-05 20:56:55 __main__ L64 INFO     ETL job complete.
+2022-09-05 21:00:02 __main__ L76 INFO     Initiating ETL pipeline!
+2022-09-05 21:00:02 __main__ L76 INFO     Initiating ETL pipeline!
+2022-09-05 21:00:02 __main__ L36 INFO     Extracting file from /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv
+2022-09-05 21:00:02 __main__ L36 INFO     Extracting file from /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv
+2022-09-05 21:00:02 src.extract L10 INFO     /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv exists. 
+2022-09-05 21:00:02 src.extract L10 INFO     /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv exists. 
+2022-09-05 21:00:02 __main__ L39 INFO     Extraction CPU usage 39.8%
+2022-09-05 21:00:02 __main__ L39 INFO     Extraction CPU usage 39.8%
+2022-09-05 21:00:02 __main__ L43 INFO     Setting/transforming data types.
+2022-09-05 21:00:02 __main__ L43 INFO     Setting/transforming data types.
+2022-09-05 21:00:02 __main__ L47 INFO     Transform CPU usage 0.0%
+2022-09-05 21:00:02 __main__ L53 INFO     Validating data.
+2022-09-05 21:00:02 __main__ L47 INFO     Transform CPU usage 0.0%
+2022-09-05 21:00:02 utils.validate L18 INFO     Validation REloan_check passed.
+2022-09-05 21:00:02 __main__ L53 INFO     Validating data.
+2022-09-05 21:00:02 __main__ L57 INFO     Validation CPU usage 0.0%
+2022-09-05 21:00:02 __main__ L60 INFO     Loading data...
+2022-09-05 21:00:02 utils.validate L18 INFO     Validation REloan_check passed.
+2022-09-05 21:00:02 __main__ L57 INFO     Validation CPU usage 0.0%
+2022-09-05 21:00:02 __main__ L60 INFO     Loading data...
+2022-09-05 21:00:05 src.load L100 INFO     Schema paidy1 found.
+2022-09-05 21:00:05 src.load L100 INFO     Schema paidy1 found.
+2022-09-05 21:00:06 src.load L105 INFO     Table test4_20220905 exists! Appending if there is any new data.
+2022-09-05 21:00:06 src.load L105 INFO     Table test4_20220905 exists! Appending if there is any new data.
+2022-09-05 21:00:52 __main__ L62 INFO     Data succesfully loaded.
+2022-09-05 21:00:52 __main__ L63 INFO     Load CPU usage 11.1%
+2022-09-05 21:00:52 __main__ L64 INFO     ETL job complete.
+2022-09-05 21:00:55 __main__ L62 INFO     Data succesfully loaded.
+2022-09-05 21:00:55 __main__ L63 INFO     Load CPU usage 11.4%
+2022-09-05 21:00:55 __main__ L64 INFO     ETL job complete.
+2022-09-05 21:04:01 __main__ L76 INFO     Initiating ETL pipeline!
+2022-09-05 21:04:01 __main__ L36 INFO     Extracting file from /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv
+2022-09-05 21:04:01 src.extract L10 INFO     /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv exists. 
+2022-09-05 21:04:02 __main__ L39 INFO     Extraction CPU usage 28.2%
+2022-09-05 21:04:02 __main__ L43 INFO     Setting/transforming data types.
+2022-09-05 21:04:02 __main__ L47 INFO     Transform CPU usage 16.7%
+2022-09-05 21:04:02 __main__ L53 INFO     Validating data.
+2022-09-05 21:04:02 utils.validate L18 INFO     Validation REloan_check passed.
+2022-09-05 21:04:02 __main__ L57 INFO     Validation CPU usage 50.0%
+2022-09-05 21:04:02 __main__ L60 INFO     Loading data...
+2022-09-05 21:04:04 src.load L100 INFO     Schema paidy1 found.
+2022-09-05 21:04:06 src.load L105 INFO     Table test4_20220905 exists! Appending if there is any new data.
+2022-09-05 21:04:51 __main__ L62 INFO     Data succesfully loaded.
+2022-09-05 21:04:51 __main__ L63 INFO     Load CPU usage 7.2%
+2022-09-05 21:04:51 __main__ L64 INFO     ETL job complete.
+2022-09-05 21:08:01 __main__ L76 INFO     Initiating ETL pipeline!
+2022-09-05 21:08:01 __main__ L36 INFO     Extracting file from /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv
+2022-09-05 21:08:01 src.extract L10 INFO     /Users/jaichung/Documents/10_Work/paidy/part1/data/sample_data.csv exists. 
+2022-09-05 21:08:01 __main__ L39 INFO     Extraction CPU usage 33.0%
+2022-09-05 21:08:01 __main__ L43 INFO     Setting/transforming data types.
+2022-09-05 21:08:01 __main__ L47 INFO     Transform CPU usage 15.1%
+2022-09-05 21:08:01 __main__ L53 INFO     Validating data.
+2022-09-05 21:08:01 utils.validate L18 INFO     Validation REloan_check passed.
+2022-09-05 21:08:01 __main__ L57 INFO     Validation CPU usage 0.0%
+2022-09-05 21:08:01 __main__ L60 INFO     Loading data...
+2022-09-05 21:08:04 src.load L100 INFO     Schema paidy1 found.
+2022-09-05 21:08:06 src.load L105 INFO     Table test4_20220905 exists! Appending if there is any new data.
+2022-09-05 21:08:53 __main__ L62 INFO     Data succesfully loaded.
+2022-09-05 21:08:53 __main__ L63 INFO     Load CPU usage 12.0%
+2022-09-05 21:08:53 __main__ L64 INFO     ETL job complete.

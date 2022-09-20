@@ -1,0 +1,29 @@
+DATABASE:
+  DB_TYPE: postgresql
+  # DB_TYPE: is the db on a postgresql? mysql? (e.g. postgresql)
+  USERNAME: postgres
+  # USERNAME: username to access db; (e.g. postgres)
+  PASSWORD: postgres
+  # PASSWORD: PW to access db
+  HOST: 
+  # HOST: given host URL (e.g. ******.****.us-west-1.rds.amazonaws.com)
+  PORT: 8002
+  # PORT: port to connect host URL (e.g. 5324)
+  DB_NAME: 
+  # DB_NAME: name of the database to connect to
+  SCHEMA: 
+  # SCHEMA: schema under database
+  TABLE: 
+  # TABLE: table name
+
+OPTIONS:
+  TRANSFORM: true
+  # TRANSFORM: true/false 
+  VALIDATE: true
+  # VALIDATE: true/false; if true, it goes through all validation tests
+
+DATA_SOURCE:
+  TYPE: LOCAL
+  # is the source of the data local? or coming from a URL? (case-insensitive choices: LOCAL or URL)
+  FULL_DIR: 
+  # FULL_DIR: define full directory where the CSV file will be located

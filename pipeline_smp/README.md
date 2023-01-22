@@ -1,5 +1,3 @@
-# DSE Assignment
-
 ### Part 1 - Data Ingestion
 #### Assumptions
 1. This pipeline is to be run via Postgresql
